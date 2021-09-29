@@ -85,33 +85,25 @@
             </div>
             <div class="nav-menus-wrapper row">
                 <div class="xs-logo-wraper col-lg-2 xs-padding-0">
-                    <a class="nav-brand" href="home.html">
+                    <a class="nav-brand" href="rethinkafrica-ghana2021.html">
                         <img src="assets/images/logo.png" style="width: 250px;" alt="">
                     </a>
                 </div>
                 <div class="col-lg-10">
                     <ul class="nav-menu">
-                        <li><a href="home.html">Home</a>
-
-
-                        </li>
-                        <li><a href="about.html">about</a></li>
-                        <li><a href="cultural-tours.html">Cultural Tours</a></li>
-                        <li><a href="youth-engagements.html">Youth Engagements</a>
-
-                        </li>
-
-
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="rethinkafrica-ghana2021.html">Home</a></li>
+                        <li><a href="welcomepack.html">Welcome Pack</a></li>
+                        <li><a href="checklist.html">Checklist</a></li>
+                        <li><a href="itinerary.html">Itinerary</a></li>
+                        <li><a href="explore.html">Explore</a></li>
+                        <li><a href="contactlist.html">Contact List</a></li>
                     </ul>
-                </div>
-                <div class="xs-navs-button d-flex-center-end col-lg-3">
-
                 </div>
             </div>
         </nav>
     </div>
 </header>
+
 
 
 <section class="xs-banner-inner-section parallax-window"
@@ -130,9 +122,47 @@
 
     <section class="xs-content-section-padding">
         <div class="container">
-            <div class="row xs-mb-50" id="getData">
+            <div class="row">
+                <div class="col-md-12 col-lg-4">
 
-            </div>
+                    <div class="sidebar sidebar-right">
+
+                        <div class="widget widget_search">
+                            <div class="xs-serachForm" method="get" onsubmit="search(e)"
+                                  >
+                                <input type="search" id="searchQ" onkeyup="search()" onchange="search()" name="q" placeholder="Type keywords...">
+                                <button type="button" onclick="search()" value=""></button>
+                            </div>
+                        </div>
+
+                        <div class="widget widget_categories xs-sidebar-widget">
+                            <h3 class="widget-title">Categories</h3>
+                            <ul class="xs-side-bar-list" id="getCategories">
+                            </ul>
+                        </div>
+
+                       <!-- <div class="widget widget_social_share xs-sidebar-widget">
+                            <h3 class="widget-title">Useful Links</h3>
+                            <ul class="xs-social-list boxed">
+                                &lt;!&ndash; <li><a href="welcomepack.html">Welcome Pack</a></li>&ndash;&gt;
+                                <li><a href="checklist.html">Checklist</a></li>
+                                <li><a href="itinerary.html">Itinerary</a></li>
+                                <li><a href="explore.html">Explore</a></li>
+                                <li><a href="contactlist.html">Contact List</a></li>
+                            </ul>
+                        </div>-->
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-lg-8">
+                    <div class="row xs-mb-50" id="getData">
+
+                    </div>
+
+                </div>
+             </div>
 
             <!--<ul class="pagination justify-content-center xs-pagination">
                 <li class="page-item disabled">
@@ -261,19 +291,46 @@
     </div>
 </footer>
 
-<script>
 
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/plugins.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/isotope.pkgd.min.js"></script>
+<script src="assets/js/jquery.magnific-popup.min.js"></script>
+<script src="assets/js/owl.carousel.min.js"></script>
+<script src="assets/js/jquery.waypoints.min.js"></script>
+<script src="assets/js/jquery.countdown.min.js"></script>
+<script src="assets/js/spectragram.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyCy7becgYuLwns3uumNm6WdBYkBpLfy44k"></script>
+<script src="assets/js/main.js"></script>
+
+
+<script>
+    let reses,  categories = []
     function getdata() {
         fetch('https://sheets.googleapis.com/v4/spreadsheets/1TWVpBFtzRWFZOYVWsiTDe0b4Z8lfhWGvvRURWN3vIlw/values/Sheet1?key=AIzaSyDTy4l4t61Bwn1deLiIjP5eBUKsAHQMd6E')
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-             const reses = data.values
-                for (i = 1; i < reses.length; i++) {
-                 const res = reses[i]
-                 const img = res[9] && res[9] !== "" ? res[9] : 'https://buzzghana.com/wp-content/uploads/2013/09/Ghana-Flag.jpg'
-                    document.getElementById("getData").innerHTML +=
-                        `<div class="col-lg-4 col-md-6">
+                 reses = data.values
+                reses.shift()
+                 categories = []
+                setData(reses)
+                const cat = categories.filter((v, i, a) => a.indexOf(v) === i)
+                for (let i = 0; i < cat.length; i++) {
+                    const count = categories.filter((c)=>  c === cat[i]).length
+                    document.getElementById("getCategories").innerHTML +=
+                        ` <li><a href="#"><span>${cat[i]}</span><span>(${count})</span></a></li>`
+                }
+            });
+    }
+    function setData(reses){
+        document.getElementById("getData").innerHTML = ""
+        for ( let i = 0; i < reses.length; i++) {
+            const res = reses[i]
+            categories.push(res[1].trim())
+            const img = res[9] && res[9] !== "" ? res[9] : 'https://buzzghana.com/wp-content/uploads/2013/09/Ghana-Flag.jpg'
+            document.getElementById("getData").innerHTML +=
+                `<div class="col-lg-6 col-md-6">
                     <div class="xs-box-shadow xs-single-journal xs-mb-30">
                         <div class="entry-thumbnail ">
                             <img src="${img}" alt="" style="    height: 190px;
@@ -312,25 +369,23 @@
                         </div>
                     </div>
                 </div>`
+        }
 
-                }
-            });
     }
 
-    getdata()
-</script>
+    function search(){
+       const q = $('#searchQ').val()
+        let r = reses.filter((r)=> {
+           return  r.toString().toLowerCase().includes(q.toLowerCase())
+        })
+        setData(r)
+    }
 
-<script src="assets/js/jquery-3.2.1.min.js"></script>
-<script src="assets/js/plugins.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/isotope.pkgd.min.js"></script>
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/jquery.waypoints.min.js"></script>
-<script src="assets/js/jquery.countdown.min.js"></script>
-<script src="assets/js/spectragram.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyCy7becgYuLwns3uumNm6WdBYkBpLfy44k"></script>
-<script src="assets/js/main.js"></script>
+    $('document').ready(function(){
+        getdata()
+    });
+
+</script>
 </body>
 
 </html>

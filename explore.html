@@ -105,7 +105,6 @@
 </header>
 
 
-
 <section class="xs-banner-inner-section parallax-window"
          style="background-image:url('assets/images/img.jpg');padding-top: 100px;
     padding-bottom: 30px;">
@@ -129,8 +128,9 @@
 
                         <div class="widget widget_search">
                             <div class="xs-serachForm" method="get" onsubmit="search(e)"
-                                  >
-                                <input type="search" id="searchQ" onkeyup="search()" onchange="search()" name="q" placeholder="Type keywords...">
+                            >
+                                <input type="search" id="searchQ" onkeyup="search()" onchange="search()" name="q"
+                                       placeholder="Type keywords...">
                                 <button type="button" onclick="search()" value=""></button>
                             </div>
                         </div>
@@ -141,16 +141,16 @@
                             </ul>
                         </div>
 
-                       <!-- <div class="widget widget_social_share xs-sidebar-widget">
-                            <h3 class="widget-title">Useful Links</h3>
-                            <ul class="xs-social-list boxed">
-                                &lt;!&ndash; <li><a href="welcomepack.html">Welcome Pack</a></li>&ndash;&gt;
-                                <li><a href="checklist.html">Checklist</a></li>
-                                <li><a href="itinerary.html">Itinerary</a></li>
-                                <li><a href="explore.html">Explore</a></li>
-                                <li><a href="contactlist.html">Contact List</a></li>
-                            </ul>
-                        </div>-->
+                        <!-- <div class="widget widget_social_share xs-sidebar-widget">
+                             <h3 class="widget-title">Useful Links</h3>
+                             <ul class="xs-social-list boxed">
+                                 &lt;!&ndash; <li><a href="welcomepack.html">Welcome Pack</a></li>&ndash;&gt;
+                                 <li><a href="checklist.html">Checklist</a></li>
+                                 <li><a href="itinerary.html">Itinerary</a></li>
+                                 <li><a href="explore.html">Explore</a></li>
+                                 <li><a href="contactlist.html">Contact List</a></li>
+                             </ul>
+                         </div>-->
 
 
                     </div>
@@ -162,7 +162,7 @@
                     </div>
 
                 </div>
-             </div>
+            </div>
 
             <!--<ul class="pagination justify-content-center xs-pagination">
                 <li class="page-item disabled">
@@ -306,26 +306,40 @@
 
 
 <script>
-    let reses,  categories = []
+    let reses, categories = []
+    let hash = window.location.hash.substr(1);
+
+    $(window).on('hashchange', function() {
+        hash = window.location.hash.substr(1);
+        if (hash && hash !== ''){
+           let re = reses.filter((r)=>{
+                return  r[1] === decodeURIComponent(hash)
+            })
+            setData(re)
+
+        }
+
+    });
     function getdata() {
         fetch('https://sheets.googleapis.com/v4/spreadsheets/1TWVpBFtzRWFZOYVWsiTDe0b4Z8lfhWGvvRURWN3vIlw/values/Sheet1?key=AIzaSyDTy4l4t61Bwn1deLiIjP5eBUKsAHQMd6E')
             .then(response => response.json())
             .then(data => {
-                 reses = data.values
+                reses = data.values
                 reses.shift()
-                 categories = []
+                categories = []
                 setData(reses)
                 const cat = categories.filter((v, i, a) => a.indexOf(v) === i)
                 for (let i = 0; i < cat.length; i++) {
-                    const count = categories.filter((c)=>  c === cat[i]).length
+                    const count = categories.filter((c) => c === cat[i]).length
                     document.getElementById("getCategories").innerHTML +=
-                        ` <li><a href="#"><span>${cat[i]}</span><span>(${count})</span></a></li>`
+                        ` <li><a href="#${cat[i]}"><span>${cat[i]}</span><span>(${count})</span></a></li>`
                 }
             });
     }
-    function setData(reses){
+
+    function setData(reses) {
         document.getElementById("getData").innerHTML = ""
-        for ( let i = 0; i < reses.length; i++) {
+        for (let i = 0; i < reses.length; i++) {
             const res = reses[i]
             categories.push(res[1].trim())
             const img = res[9] && res[9] !== "" ? res[9] : 'https://buzzghana.com/wp-content/uploads/2013/09/Ghana-Flag.jpg'
@@ -373,15 +387,15 @@
 
     }
 
-    function search(){
-       const q = $('#searchQ').val()
-        let r = reses.filter((r)=> {
-           return  r.toString().toLowerCase().includes(q.toLowerCase())
+    function search() {
+        const q = $('#searchQ').val()
+        let r = reses.filter((r) => {
+            return r.toString().toLowerCase().includes(q.toLowerCase())
         })
         setData(r)
     }
 
-    $('document').ready(function(){
+    $('document').ready(function () {
         getdata()
     });
 

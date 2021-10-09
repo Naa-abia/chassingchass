@@ -313,7 +313,7 @@
         hash = window.location.hash.substr(1);
         if (hash && hash !== ''){
            let re = reses.filter((r)=>{
-                return  r[1] === decodeURIComponent(hash)
+                return  r[1].includes(decodeURIComponent(hash) )
             })
             setData(re)
 
@@ -329,8 +329,9 @@
                 categories = []
                 setData(reses)
                 const cat = categories.filter((v, i, a) => a.indexOf(v) === i)
+                document.getElementById("getCategories").innerHTML = ` <li><a href=""><span>All</span><span>(${reses.length})</span></a></li>`
                 for (let i = 0; i < cat.length; i++) {
-                    const count = categories.filter((c) => c === cat[i]).length
+                    const count = categories.filter((c) => cat[i].includes(c)).length
                     document.getElementById("getCategories").innerHTML +=
                         ` <li><a href="#${cat[i]}"><span>${cat[i]}</span><span>(${count})</span></a></li>`
                 }
@@ -341,7 +342,9 @@
         document.getElementById("getData").innerHTML = ""
         for (let i = 0; i < reses.length; i++) {
             const res = reses[i]
-            categories.push(res[1].trim())
+             const cat = res[1].split(",")
+           categories = categories.concat(cat)
+           categories = categories.map((c)=> c.trim())
             const img = res[9] && res[9] !== "" ? res[9] : 'https://buzzghana.com/wp-content/uploads/2013/09/Ghana-Flag.jpg'
             document.getElementById("getData").innerHTML +=
                 `<div class="col-lg-6 col-md-6">

@@ -99,7 +99,7 @@
                         <li><a href="checklist.html">Checklist</a></li>
                         <li><a href="timeline.html">Timelines</a></li>
                         <li><a href="itinerary.html">Itinerary</a></li>
-                        <li><a href="explore.html">Explore</a></li>
+                        <!-- <li><a href="explore.html">Explore</a></li> -->
                         <li><a href="contactlist.html">Contact List</a></li>
                     </ul>
                 </div>
@@ -341,7 +341,9 @@
                 }
 
                 const cat = categories.filter((v, i, a) => a.indexOf(v) === i)
-                document.getElementById("getCategories").innerHTML = ` <li><a href=""><span>All</span><span>(${reses.length})</span></a></li>`
+                document.getElementById("getCategories").innerHTML = ` `
+               
+               // document.getElementById("getCategories").innerHTML = ` <li><a href=""><span>All</span><span>(${reses.length})</span></a></li>`
                 for (let i = 0; i < cat.length; i++) {
                     const count = categories.filter((c) => cat[i].includes(c)).length
                     document.getElementById("getCategories").innerHTML +=

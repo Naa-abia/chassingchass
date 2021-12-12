@@ -10,6 +10,12 @@ body {
     overflow-x: hidden
 }
 
+/*
+.clock {
+    font-size: 1.8em;
+}
+*/
+
 iframe {
     border: none
 }
@@ -3855,8 +3861,8 @@ svg {
 }
 
 .xs-banner-inner-section {
-    padding-top: 245px;
-    padding-bottom: 279px;
+    padding-top: 150px;
+    padding-bottom: 120px;
     position: relative
 }
 
@@ -4550,7 +4556,7 @@ svg {
 }
 
 .xs-section-padding {
-    padding: 120px 0
+    padding: 60px 0
 }
 
 .xs-content-section-padding {

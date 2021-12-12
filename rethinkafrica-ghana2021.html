@@ -122,6 +122,34 @@
     <section class="xs-section-padding">
         <div class="container">
             <div class="row">
+                <div class="col-12 mt-5 text-center entry-content">
+                    <blockquote class="mt-0" style="margin-bottom: 80px;padding: 20px 30px;">
+                        <h3>
+                            Real Time
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4">
+                                <div class="row">
+                                <div class="col-6 col-md-12">Accra (GMT)</div>
+                                <div class="col-6 col-md-12 clock clock_gmt"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <div class="row">
+                                    <div class="col-6 col-md-12">New York (EST)</div>
+                                    <div class="col-6 col-md-12 clock clock_est"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-lg-4">
+                                <div class="row">
+                                    <div class="col-6 col-md-12">Chicago (CST)</div>
+                                    <div class="col-6 col-md-12 clock clock_cst"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </blockquote>
+                </div>
                 <div class="col-md-6 col-lg-4 pb-5">
                     <a href="checklist.html">
                         <div class="xs-single-team xs-mb-50">
@@ -335,6 +363,7 @@
     </div>
 </footer>
 
+
 <script src="assets/js/jquery-3.2.1.min.js"></script>
 <script src="assets/js/plugins.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
@@ -344,6 +373,56 @@
 <script src="assets/js/jquery.waypoints.min.js"></script>
 <script src="assets/js/jquery.countdown.min.js"></script>
 <script src="assets/js/spectragram.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="assets/js/moment-timezone.min.js"></script>
 <script src="assets/js/main.js"></script>
+
+
+<script>
+    /*function clock() {// We create a new Date object and assign it to a variable called "time".
+        var time = new Date(),
+
+            // Access the "getHours" method on the Date object with the dot accessor.
+            hours = time.getHours(),
+
+            // Access the "getMinutes" method with the dot accessor.
+            minutes = time.getMinutes(),
+
+
+            seconds = time.getSeconds();
+
+
+   /!* const cst =    moment.tz(moment(), 'America/Los_Angeles').format('HH:mm:SS z')
+    const est =    moment.tz(moment(), 'America/New_York').format('HH:mm:SS z')
+    const gmt =    moment.tz(moment(), 'Africa/Accra').format('HH:mm:SS z')
+        document.querySelectorAll('.clock_gmt')[0].innerHTML = harold(hours) + ":" + harold(minutes) + ":" + harold(seconds);
+        document.querySelectorAll('.clock_cst')[0].innerHTML = cst
+        document.querySelectorAll('.clock_est')[0].innerHTML = est*!/
+
+        function harold(standIn) {
+            if (standIn < 10) {
+                standIn = '0' + standIn
+            }
+            return standIn;
+        }
+    }
+    setInterval(clock, 1000);*/
+
+    window.setInterval(function () {
+        const m =  moment()
+        const cst =    m.tz('America/Chicago').format('h:mm:ss')
+        const est =    m.tz('America/New_York').format('h:mm:ss')
+        const gmt =    m.tz('Africa/Accra').format('h:mm:ss')
+        document.querySelectorAll('.clock_cst')[0].innerHTML = `<h2>${cst}<small style="font-size: 12px">${m.tz('America/Chicago').format('a')}</small></h2> `
+        document.querySelectorAll('.clock_est')[0].innerHTML = `<h2>${est}<small style="font-size: 12px">${m.tz('America/New_York').format('a')}</small></h2>`
+        document.querySelectorAll('.clock_gmt')[0].innerHTML = `<h2>${gmt}<small style="font-size: 12px">${m.tz('Africa/Accra').format('a')}</small></h2>`
+        //console.log(cst)
+    }, 1000);
+
+ /*   var timer = moment.duration(5, "seconds").timer({loop: true}, function(a) {
+        // Callback
+        console.log(a)
+    });*/
+</script>
 </body>
 </html>
